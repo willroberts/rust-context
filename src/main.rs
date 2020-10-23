@@ -6,7 +6,6 @@ use log;
 
 use server::{Database, Request, Server};
 
-/// Example code.
 fn main() {
     // Initialize dependencies.
     env_logger::init();
@@ -14,13 +13,8 @@ fn main() {
     let srv = Server::new(db);
 
     // Blocking server would go here.
-    let resp = srv.handle_req(get_request());
-    log::info!("Response: {:?}", resp);
-}
-
-/// Faked utility functions.
-fn get_request() -> Request {
-    Request {
+    let resp = srv.handle_req(Request {
         path: "/get/example".to_string(),
-    }
+    });
+    log::info!("Response: {:?}", resp);
 }

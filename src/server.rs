@@ -22,8 +22,12 @@ impl Server {
     pub fn new(db: Database) -> Server {
         Server { database: db }
     }
+    // The request handler is responsible for:
+    // - Creating the context (and inner trace)
+    // - Passing context to dependency functions
+    // - Ending the trace when returning a response
     pub fn handle_req(&self, req: Request) -> Response {
-        let span = Span::new("handler".to_string());
+        let span = Span::new("handler".to_string(), 10, None);
         let mut ctx = Context::from_request(&req);
         do_work(10, 100);
         let val = self.database.query(&mut ctx, "key".to_string());
@@ -40,7 +44,7 @@ impl Database {
         Database {}
     }
     pub fn query(&self, ctx: &mut Context, key: String) -> String {
-        let span = Span::new("database".to_string());
+        let span = Span::new("database".to_string(), 20, Some(10));
         log::debug!("quering database for key '{}'", key);
         do_work(20, 200);
         span.stop(&mut ctx.trace);
