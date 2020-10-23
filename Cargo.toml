@@ -1,0 +1,10 @@
+[package]
+name = "rust-context"
+version = "0.1.0"
+authors = ["Will Roberts <will.roberts@discordapp.com>"]
+edition = "2018"
+
+[dependencies]
+env_logger = "0.8.1"
+log = "0.4.11"
+rand = "0.7.3"
